@@ -10,11 +10,13 @@ import {
   Menu,
   X,
   GraduationCap,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuthStore();
-  const { sidebarOpen, setSidebarOpen } = useUIStore();
+  const { sidebarOpen, setSidebarOpen, sidebarCollapsed, setSidebarCollapsed } = useUIStore();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -40,24 +42,36 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="min-height-100vh flex bg-slate-950 text-slate-100">
       {/* ── Sidebar Desktop & Mobile ── */}
       <aside
-        className={`sidebar fixed top-0 bottom-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800/40 p-6 flex flex-col justify-between transition-transform duration-300 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        }`}
+        className={`sidebar bg-slate-900 border-r border-slate-800/40 p-6 flex flex-col justify-between ${
+          sidebarCollapsed ? 'collapsed' : ''
+        } ${sidebarOpen ? 'open' : ''}`}
       >
         <div>
-          {/* Logo */}
+          {/* Logo & Collapse button */}
           <div className="flex items-center gap-3 mb-8">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/20">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/20 flex-shrink-0">
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
-            <div>
-              <h1 className="font-bold text-lg leading-tight tracking-tight bg-gradient-to-r from-indigo-400 to-purple-300 bg-clip-text text-transparent">
-                StudyAI
-              </h1>
-              <span className="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">
-                Intelligence Platform
-              </span>
-            </div>
+            {!sidebarCollapsed && (
+              <div>
+                <h1 className="font-bold text-lg leading-tight tracking-tight bg-gradient-to-r from-indigo-400 to-purple-300 bg-clip-text text-transparent">
+                  StudyAI
+                </h1>
+                <span className="text-[10px] text-slate-500 font-semibold tracking-wider uppercase">
+                  Intelligence Platform
+                </span>
+              </div>
+            )}
+            
+            {/* Desktop Collapse Toggle */}
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="hidden md:flex ml-auto p-1.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-205 transition-colors cursor-pointer"
+              title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+            >
+              {sidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            </button>
+
             {/* Mobile close button */}
             <button
               onClick={() => setSidebarOpen(false)}
@@ -77,14 +91,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   key={item.path}
                   to={item.path}
                   onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  title={sidebarCollapsed ? item.label : undefined}
+                  className={`flex items-center rounded-xl text-sm font-medium transition-all duration-200 ${
+                    sidebarCollapsed ? 'p-3 justify-center' : 'px-4 py-3 gap-3.5'
+                  } ${
                     active
                       ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-md shadow-indigo-600/10'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                   }`}
                 >
-                  <Icon className={`w-5 h-5 ${active ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`} />
-                  {item.label}
+                  <Icon className={`w-5 h-5 flex-shrink-0 ${active ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`} />
+                  {!sidebarCollapsed && <span>{item.label}</span>}
                 </Link>
               );
             })}
@@ -93,28 +110,33 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* User Card & Logout */}
         <div className="flex flex-col gap-4 border-t border-slate-800/60 pt-4">
-          <div className="flex items-center gap-3 px-2">
-            <div className="w-10 h-10 rounded-full bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold">
+          <div className={`flex items-center gap-3 ${sidebarCollapsed ? 'justify-center px-0' : 'px-2'}`}>
+            <div className="w-10 h-10 rounded-full bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold flex-shrink-0">
               {user?.name?.[0]?.toUpperCase() || 'U'}
             </div>
-            <div className="overflow-hidden">
-              <h4 className="text-sm font-semibold text-slate-200 truncate">{user?.name || 'User'}</h4>
-              <p className="text-[11px] text-slate-500 truncate">{user?.email || 'user@example.com'}</p>
-            </div>
+            {!sidebarCollapsed && (
+              <div className="overflow-hidden">
+                <h4 className="text-sm font-semibold text-slate-200 truncate">{user?.name || 'User'}</h4>
+                <p className="text-[11px] text-slate-500 truncate">{user?.email || 'user@example.com'}</p>
+              </div>
+            )}
           </div>
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/5 hover:text-red-300 transition-all duration-200"
+            title={sidebarCollapsed ? "Logout" : undefined}
+            className={`flex items-center rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/5 hover:text-red-300 transition-all duration-200 cursor-pointer ${
+              sidebarCollapsed ? 'p-3 justify-center' : 'px-4 py-3 gap-3'
+            }`}
           >
-            <LogOut className="w-5 h-5" />
-            Logout
+            <LogOut className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span>Logout</span>}
           </button>
         </div>
       </aside>
 
       {/* ── Main Content Container ── */}
-      <div className="flex-1 md:pl-64 flex flex-col min-h-screen">
+      <div className={`main-content flex flex-col min-h-screen ${sidebarCollapsed ? 'collapsed' : ''}`}>
         {/* Mobile Header */}
         <header className="md:hidden flex items-center justify-between px-6 py-4 bg-slate-900 border-b border-slate-800/40 sticky top-0 z-30">
           <div className="flex items-center gap-2">

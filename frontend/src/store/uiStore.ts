@@ -7,6 +7,8 @@ interface UIState {
   setChatSidebarOpen: (open: boolean) => void;
   pdfWidth: number; // percentage (e.g. 60)
   setPdfWidth: (width: number) => void;
+  sidebarCollapsed: boolean;
+  setSidebarCollapsed: (collapsed: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -16,4 +18,6 @@ export const useUIStore = create<UIState>((set) => ({
   setChatSidebarOpen: (open) => set({ chatSidebarOpen: open }),
   pdfWidth: 60,
   setPdfWidth: (width) => set({ pdfWidth: Math.max(30, Math.min(80, width)) }),
+  sidebarCollapsed: false,
+  setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
 }));
