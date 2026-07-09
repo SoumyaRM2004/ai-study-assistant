@@ -109,8 +109,16 @@ async def upload_document(
         f"{document.original_name}"
     )
 
-    # TODO (Phase 3): Dispatch Celery task to process document
-    # tasks.process_document.delay(str(document.id))
+    # Dispatch Celery task to process document (extract → chunk → embed → store)
+    try:
+        from app.workers.tasks import process_document
+        process_document.delay(str(document.id))
+        logger.info(f"Dispatched processing task for document {document.id}")
+    except Exception as e:
+        logger.warning(
+            f"Could not dispatch Celery task for document {document.id}: {e}. "
+            f"Document will remain in PENDING status until manually processed."
+        )
 
     return DocumentUploadResponse(
         document=DocumentResponse.model_validate(document),
@@ -182,8 +190,12 @@ async def delete_document(
         os.remove(file_path)
         logger.info(f"Deleted file: {file_path}")
 
-    # TODO (Phase 3): Delete vectors from vector store
-    # await vector_store.delete_document(str(document.id))
+    # Delete vectors from Qdrant
+    try:
+        from app.rag import vector_store
+        vector_store.delete_document(str(document.id))
+    except Exception as e:
+        logger.warning(f"Could not delete vectors for document {document_id}: {e}")
 
     # Delete database record
     await db.delete(document)
