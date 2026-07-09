@@ -15,6 +15,7 @@ from app.core.database import Base
 # Import all models so Alembic can detect them
 from app.models.user import User  # noqa: F401
 from app.models.document import Document  # noqa: F401
+from app.models.chat import ChatHistory  # noqa: F401
 
 settings = get_settings()
 
