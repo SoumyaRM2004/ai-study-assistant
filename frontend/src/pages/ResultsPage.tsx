@@ -335,7 +335,7 @@ export default function ResultsPage() {
                       </span>
                       <p className="text-slate-400 leading-relaxed">{detail.explanation}</p>
                     </div>
-                  </tr>
+                  </div>
                 );
               })}
             </div>
