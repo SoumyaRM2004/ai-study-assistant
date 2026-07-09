@@ -51,10 +51,18 @@ app.add_middleware(
 from app.api.auth import router as auth_router
 from app.api.documents import router as documents_router
 from app.api.chat import router as chat_router
+from app.api.summary import router as summary_router
+from app.api.mcq import router as mcq_router
+from app.api.exam import router as exam_router
+from app.api.analytics import router as analytics_router
 
 app.include_router(auth_router)
 app.include_router(documents_router)
 app.include_router(chat_router)
+app.include_router(summary_router)
+app.include_router(mcq_router)
+app.include_router(exam_router)
+app.include_router(analytics_router)
 
 
 # ── Health Check ──────────────────────────────────────────────

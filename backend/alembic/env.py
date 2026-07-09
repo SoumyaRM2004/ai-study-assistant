@@ -16,6 +16,8 @@ from app.core.database import Base
 from app.models.user import User  # noqa: F401
 from app.models.document import Document  # noqa: F401
 from app.models.chat import ChatHistory  # noqa: F401
+from app.models.mcq import MCQQuestion  # noqa: F401
+from app.models.exam import ExamAttempt, TopicScore  # noqa: F401
 
 settings = get_settings()
 
