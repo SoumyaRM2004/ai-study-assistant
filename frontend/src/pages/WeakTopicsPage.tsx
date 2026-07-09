@@ -44,7 +44,7 @@ export default function WeakTopicsPage() {
         documentsAPI.list(),
       ]);
       setData(res.data || res);
-      setDocuments(docsRes.data?.documents || docsRes.data || []);
+      setDocuments(docsRes.data?.documents || docsRes.documents || docsRes.data || []);
     } catch (err) {
       console.error(err);
       toast.error('Failed to load weak topics analytics.');

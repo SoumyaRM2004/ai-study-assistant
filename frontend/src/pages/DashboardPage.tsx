@@ -58,7 +58,7 @@ export default function DashboardPage() {
         documentsAPI.list(),
         analyticsAPI.dashboard(),
       ]);
-      setDocs(docsRes.data.documents || docsRes.data || []);
+      setDocs(docsRes.data?.documents || docsRes.documents || docsRes.data || []);
       setStats(statsRes.data || statsRes);
     } catch (err: any) {
       console.error(err);
