@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-hot-toast';
@@ -7,9 +7,7 @@ import {
   Upload,
   File,
   CheckCircle2,
-  AlertCircle,
   Loader2,
-  FileCheck,
 } from 'lucide-react';
 
 interface Stage {
@@ -35,7 +33,7 @@ export default function UploadPage() {
     { key: 'SUMMARY_GENERATION', label: 'Creating study guide summary', description: 'Generating initial concepts using Gemini AI.' },
   ];
 
-  const simulateProcessing = (docId: string) => {
+  const simulateProcessing = (_docId: string) => {
     let index = 0;
     setCompletedStages([]);
 
@@ -225,7 +223,7 @@ export default function UploadPage() {
               {processingStages.map((stage, idx) => {
                 const isCompleted = completedStages.includes(stage.key);
                 const isActive = activeStage === stage.key;
-                const isWaiting = !isCompleted && !isActive;
+
 
                 return (
                   <div
