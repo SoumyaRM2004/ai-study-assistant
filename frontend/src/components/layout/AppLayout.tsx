@@ -10,7 +10,6 @@ import {
   Menu,
   X,
   GraduationCap,
-  Sparkles,
 } from 'lucide-react';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

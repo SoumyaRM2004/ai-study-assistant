@@ -165,7 +165,7 @@ export const mockChat = {
     };
   },
 
-  summarize: async (answer: string) => {
+  summarize: async (_answer: string) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
     return {
       result: `### Key Points Summary:\n- Main concept: Educational content optimization\n- System function: Processes text extraction and embedding vector mapping\n- Benefit: Pinpoints specific learning items and tracks weak subjects`,
@@ -173,7 +173,7 @@ export const mockChat = {
     };
   },
 
-  simplify: async (answer: string) => {
+  simplify: async (_answer: string) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
     return {
       result: `Here is a simpler explanation: This study app lets you upload books as PDFs. An AI reads it, helps you search it, and makes practice quizzes to show you what topics you need to study more.`,
@@ -181,7 +181,7 @@ export const mockChat = {
     };
   },
 
-  generateMcq: async (answer: string) => {
+  generateMcq: async (_answer: string) => {
     await new Promise((resolve) => setTimeout(resolve, 600));
     return {
       result: `**Practice Question**:\nWhat is the main goal of the AI Study Platform?\n\nA) To create PDF documents\nB) To help users study documents through chat, exams, and analytics (Correct)\nC) To replace classroom lectures\nD) To design graphics files\n\n*Explanation: The system focuses on helping students read PDFs, chat with them using RAG, take MCQs, and understand study weaknesses.*`,

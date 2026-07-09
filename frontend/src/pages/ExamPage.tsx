@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { examAPI } from '../lib/api';
-import { Loader2, Timer, Flag, ChevronLeft, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Loader2, Timer, Flag, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 
 interface Question {
   id: string;
@@ -35,7 +35,7 @@ export default function ExamPage() {
   const [submitting, setSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<any>(null);
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentIndex];
   

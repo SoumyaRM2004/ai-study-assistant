@@ -3,21 +3,15 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { chatAPI, documentsAPI, summaryAPI } from '../lib/api';
 import { useUIStore } from '../store/uiStore';
-import ErrorBoundary from '../components/ui/ErrorBoundary';
 import { SkeletonList } from '../components/ui/Skeleton';
 import {
   Send,
-  BookOpen,
   ArrowLeft,
-  ChevronLeft,
-  ChevronRight,
   Sparkles,
   Bookmark,
   ExternalLink,
   Loader2,
   FileText,
-  HelpCircle,
-  Scissors,
 } from 'lucide-react';
 
 interface Message {
@@ -172,7 +166,7 @@ export default function ChatPage() {
         id: m.id,
         sender: 'user', // We will map question -> user, answer -> ai
         text: m.question,
-      })).reduce((acc: Message[], curr: any, idx: number) => {
+      })).reduce((acc: Message[], _curr: any, idx: number) => {
         const item = historyList[idx];
         acc.push({
           id: `${item.id}-q`,
@@ -308,7 +302,7 @@ export default function ChatPage() {
   const handlePostAction = async (msgId: string, actionType: 'summarize' | 'simplify' | 'mcq', text: string) => {
     setMessages(prev => prev.map(m => m.id === msgId ? { ...m, processingAction: actionType } : m));
     try {
-      let res;
+      let res: any;
       if (actionType === 'summarize') {
         res = await summaryAPI.summarize(text);
         setMessages(prev => prev.map(m => m.id === msgId ? { ...m, summary: res.data?.result || res.result } : m));

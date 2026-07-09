@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import { examAPI, documentsAPI } from '../lib/api';
+import { examAPI } from '../lib/api';
 import ErrorBoundary from '../components/ui/ErrorBoundary';
 import { SkeletonCard, SkeletonList } from '../components/ui/Skeleton';
 import {
   Award,
   Clock,
-  CheckCircle2,
   XCircle,
   ArrowRight,
-  BookOpen,
-  HelpCircle,
-  HelpCircle as QuestionIcon,
 } from 'lucide-react';
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
   ResponsiveContainer,
   Radar,
   RadarChart,

@@ -33,7 +33,7 @@ export const mockAuth = {
     };
   },
 
-  refresh: async (refreshToken: string) => {
+  refresh: async (_refreshToken: string) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     return {
       access_token: 'mock-new-access-token',

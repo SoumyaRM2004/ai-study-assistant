@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { examAPI, documentsAPI } from '../lib/api';
@@ -93,7 +93,9 @@ export default function ExamSetupPage() {
           <div className="flex flex-col gap-2">
             <label className="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
               Question Count
-              <HelpCircle className="w-3.5 h-3.5 text-slate-500" title="Select how many questions will be generated for your self-test." />
+              <span title="Select how many questions will be generated for your self-test.">
+                <HelpCircle className="w-3.5 h-3.5 text-slate-500" />
+              </span>
             </label>
             <div className="grid grid-cols-4 gap-3">
               {[5, 10, 20, 40].map((count) => (

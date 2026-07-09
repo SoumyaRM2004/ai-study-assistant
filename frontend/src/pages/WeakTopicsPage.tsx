@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { analyticsAPI, documentsAPI } from '../lib/api';
 import ErrorBoundary from '../components/ui/ErrorBoundary';
 import { SkeletonCard, SkeletonList } from '../components/ui/Skeleton';
-import { BrainCircuit, AlertTriangle, CheckCircle, ArrowRight, ArrowLeft, RefreshCw, FileText } from 'lucide-react';
+import { BrainCircuit, AlertTriangle, CheckCircle, ArrowRight, ArrowLeft, FileText } from 'lucide-react';
 import {
   BarChart,
   Bar,
