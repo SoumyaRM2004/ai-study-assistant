@@ -1,0 +1,42 @@
+# Backend dependencies for AI Study Intelligence Platform
+
+# Core Framework
+fastapi[standard]>=0.115
+uvicorn[standard]
+pydantic-settings
+python-multipart
+
+# Database
+sqlalchemy[asyncio]>=2.0
+asyncpg
+alembic
+
+# Authentication
+passlib[bcrypt]
+python-jose[cryptography]
+
+# AI / RAG
+langchain>=0.2
+langchain-google-genai
+langchain-text-splitters
+
+# Vector Database
+qdrant-client>=1.9
+
+# PDF Processing
+PyMuPDF
+pdfplumber
+
+# Background Tasks
+celery[redis]
+redis
+
+# Rate Limiting
+slowapi
+
+# Streaming
+sse-starlette
+
+# Utilities
+python-dotenv
+httpx
